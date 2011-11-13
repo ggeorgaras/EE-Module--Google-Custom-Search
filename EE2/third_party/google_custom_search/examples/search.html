@@ -1,0 +1,82 @@
+<h1>Search Results</h1>
+
+{exp:google_custom_search:search query="{if segment_2}{segment_2}{/if}" limit="7" offset="{if segment_3}{segment_3}{/if}"}
+	
+	<p>Showing {start_index} - {last_index} of an estimated {total_results} results for <strong>{query}</strong></p>
+	
+	<ul id="search-results">
+
+		{results}
+			<li>
+				<h3><a href="{auto_path}">{title}</a></h3>
+				<p>
+					{content}<br>
+					<em>{unescaped_url}</em>
+				</p>
+			</li>
+		{/results}
+	
+	</ul>
+
+	<p>
+
+		{if is_first_page}
+			<a href="{path="search"}/{url_safe_query}/{first_page_offset}/">First</a>
+		{/if}
+
+		{if is_prev_page}
+			<a href="{path="search"}/{url_safe_query}/{prev_page_offset}/">Previous</a>
+		{/if}
+
+		{pagination}
+
+			{if is_active}
+				{label}
+			{if:else}
+				<a href="{path="search"}/{url_safe_query}/{offset}/">{label}</a>
+			{/if}
+
+			{if is_last_page == FALSE}
+				| 
+			{/if}
+
+		{/pagination}
+
+		{if is_next_page}
+			<a href="{path="search"}/{url_safe_query}/{next_page_offset}/">Next</a>
+		{/if}
+
+		{if is_last_page}
+			<a href="{path="search"}/{url_safe_query}/{last_page_offset}/">Last</a>
+		{/if}
+
+	</p>
+
+	{if no_results}
+		
+		<p>
+			
+			{if query != ""}
+				Sorry, there were no results found for <strong>{query}</strong>.
+			{/if}
+			
+			{if spelling_suggestion}
+				Is it possible that you meant to search for, <a href="{path="search"}/{url_safe_spelling_suggestion}/"><strong><em>{spelling_suggestion}</em></strong></a>?
+			{/if}
+
+			{if error_text}
+				Additionally, an error was received from Google: {error_text}
+			{/if}
+		
+			{if query == ""}
+			
+				{!-- Miller, you may want to put a search box here --}
+				Hover your mouse over the search icon in the navigation menu to begin.
+				
+			{/if}
+		
+		</p>
+		
+	{/if}
+
+{/exp:google_custom_search:search}
